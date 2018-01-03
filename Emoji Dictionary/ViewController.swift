@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var emoji_tblvw: UITableView!
-       
+    
     var emojis = ["😀","💩","📡","🚫","🐝", "🐔"]
     
     override func viewDidLoad() {
@@ -31,6 +31,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let cell = UITableViewCell()
         cell.textLabel?.text = emojis[indexPath.row]
         return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        let emoji = emojis[indexPath.row]
+        performSegueWithIdentifier("moveSegue", sender: emoji)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let defVC = segue.destinationViewController as! DefinitionViewController
+        defVC.emoji = sender as! String
     }
 
     override func didReceiveMemoryWarning() {
